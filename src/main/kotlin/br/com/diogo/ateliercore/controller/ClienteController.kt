@@ -1,6 +1,8 @@
 package br.com.diogo.ateliercore.controller
 
 import br.com.diogo.ateliercore.domain.Cliente
+import br.com.diogo.ateliercore.dto.cliente.ClienteRequest
+import br.com.diogo.ateliercore.dto.cliente.ClienteResponse
 import br.com.diogo.ateliercore.service.ClienteService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -22,14 +24,11 @@ class ClienteController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun criar(@RequestBody cliente: Cliente): Cliente {
-        return clienteService.criar(cliente)
-    }
+    fun criar(@Valid @RequestBody request: ClienteRequest) =
+        clienteService.criar(request)
 
     @GetMapping
-    fun listar(): List<Cliente> {
-        return clienteService.listar()
-    }
+    fun listar() = clienteService.listar()
 
     @GetMapping("/{id}")
     fun buscarPorId(@PathVariable id: Long): Cliente {
