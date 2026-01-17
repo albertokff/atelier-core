@@ -9,8 +9,5 @@ data class ClienteRequest(
     val nome: String,
 
     @field:NotBlank(message = "Telefone é obrigatório")
-    val telefone: String,
-
-    @field:Email(message = "Email inválido")
-    val email: String?
+    val telefone: String
 )

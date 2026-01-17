@@ -14,8 +14,7 @@ class ClienteService(
     fun criar(request: ClienteRequest): ClienteResponse {
         val cliente = Cliente(
             nome = request.nome,
-            telefone = request.telefone,
-            email = request.email,
+            telefone = request.telefone
         )
 
         val salvo = clienteRepository.save(cliente)
