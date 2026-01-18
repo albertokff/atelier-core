@@ -4,5 +4,5 @@ data class ClienteResponse(
     val id: Long,
     val nome: String,
     val telefone: String,
-    val email: String? = ""
+    val observacoes: String? = ""
 )

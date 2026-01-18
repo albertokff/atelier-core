@@ -31,7 +31,7 @@ class ClienteController(
     fun listar() = clienteService.listar()
 
     @GetMapping("/{id}")
-    fun buscarPorId(@PathVariable id: Long): Cliente {
+    fun buscarPorId(@PathVariable id: Long): ClienteResponse {
         return clienteService.buscarPorId(id)
     }
 

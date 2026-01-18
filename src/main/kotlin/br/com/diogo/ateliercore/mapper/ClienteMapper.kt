@@ -8,5 +8,6 @@ fun Cliente.toResponse(): ClienteResponse {
         id = this.id,
         nome = this.nome,
         telefone = this.telefone,
+        observacoes = this.observacoes,
     )
 }

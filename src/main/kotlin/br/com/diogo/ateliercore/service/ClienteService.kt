@@ -3,6 +3,7 @@ package br.com.diogo.ateliercore.service
 import br.com.diogo.ateliercore.domain.Cliente
 import br.com.diogo.ateliercore.dto.cliente.ClienteRequest
 import br.com.diogo.ateliercore.dto.cliente.ClienteResponse
+import br.com.diogo.ateliercore.exception.ClienteNaoEncontradoException
 import br.com.diogo.ateliercore.mapper.toResponse
 import br.com.diogo.ateliercore.repository.ClienteRepository
 import org.springframework.stereotype.Service
@@ -25,13 +26,18 @@ class ClienteService(
     fun listar(): List<ClienteResponse> =
         clienteRepository.findAll().map { it.toResponse() }
 
-    fun buscarPorId(id: Long): Cliente {
+    fun buscarPorId(id: Long): ClienteResponse {
+        val cliente = buscarEntidadePorId(id)
+        return cliente.toResponse()
+    }
+
+    fun buscarEntidadePorId(id: Long): Cliente {
         return clienteRepository.findById(id)
-            .orElseThrow { RuntimeException("Cliente não encontrado") }
+        .orElseThrow { ClienteNaoEncontradoException(id) }
     }
 
     fun atualizar(id: Long, clienteAtualizado: Cliente): Cliente {
-        val cliente = buscarPorId(id)
+        val cliente = buscarEntidadePorId(id)
 
         val clienteNovo = cliente.copy(
             nome = clienteAtualizado.nome,
@@ -43,7 +49,7 @@ class ClienteService(
     }
 
     fun deletar(id: Long) {
-        buscarPorId(id)
-        clienteRepository.deleteById(id)
+        val cliente = buscarEntidadePorId(id)
+        clienteRepository.delete(cliente)
     }
 }
